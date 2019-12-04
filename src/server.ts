@@ -19,6 +19,19 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   app.get( "/filteredimage/", ( req: Request, res: Response ) => {
   // IT SHOULD
   //    1. validate the image_url query
+  let { image_url } = req.query;
+  if ( !image_url ) {
+    return res.status(400)
+              .send(`a public image url is required.`);
+  }
+  var pattern =  /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/;
+
+  if (!pattern.test(image_url) ){
+    return res.status(400)
+    .send(`${image_url} is not a valid image url!`);
+  }
+  return res.status(200)
+              .send(`You send this url, ${image_url}!`);
   //    2. call filterImageFromURL(image_url) to filter the image
   //    3. send the resulting file in the response
   //    4. deletes any files on the server on finish of the response
