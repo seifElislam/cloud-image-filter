@@ -44,7 +44,9 @@ import { filterImageFromURL, deleteLocalFiles } from './util/util';
           deleteLocalFiles([requestImgPath])
         });
     }
-    catch{ res.status(500).send('Can\'t process this image url') }
+    catch (err){
+      console.log(">> Error : ", err)
+       res.status(500).send('Can\'t process this image url') }
 
     // QUERY PARAMATERS
     //    image_url: URL of a publicly accessible image
